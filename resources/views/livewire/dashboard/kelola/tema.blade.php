@@ -5,7 +5,12 @@
 
     <div class="alert alert-info mt-2 d-flex justify-content-between align-items-center">
         <p class="m-0">Aktifkan Fitur Tema Agar Kamu Bisa Bebas Pilih Tema Sesuka Kamu</p>
-        <a href="{{ route('dashboard.pay', Crypt::encryptString($dataId)) }}" class="btn btn-sm btn-light" wire:navigate>Aktifkan</a>
+      
+        {{-- <a wire:click="" href="{{ route('dashboard.pay', Crypt::encryptString($dataId)) }}" class="btn btn-sm btn-light" wire:navigate>Aktifkan</a> --}}
+
+        <form wire:submit.prevent="pay">
+            <button type="submit" class="btn btn-sm btn-light">Aktifkan</button>
+        </form>
     </div>
 
     <div class="card border-info border mt-2">
@@ -32,8 +37,8 @@
                             {{-- <div class="author">
                                 <small class="text-white user d-block"><i class="uil uil-user"></i> Calvin Carlo</small>
                                 <small class="text-white date"><i class="uil uil-calendar-alt"></i> 25th June
-                                    2021</small>
-                            </div> --}}
+                                    2021</small> --}}
+                            </div>
                         </div>
                     </div><!--end col-->
                 @endforeach

@@ -15,7 +15,7 @@
                         <div class="form-text" id="basic-addon4">{{ session('message') }}</div>
                     @endif
                 </form>
-                <button class="w-100 btn btn-primary mt-3" wire:click='checkOut'>Continue to checkout</button>
+                <button class="w-100 btn btn-primary mt-3" wire:click='checkout'>Continue to checkout</button>
             </div>
         </div><!--end col-->
 

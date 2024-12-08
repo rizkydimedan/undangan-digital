@@ -2,20 +2,21 @@
 
 namespace App\Models;
 
-use App\Models\KelolaUndangan\Pria;
-use App\Models\KelolaUndangan\Acara;
-use App\Models\KelolaUndangan\FiturKado;
-use App\Models\KelolaUndangan\FiturUcapan;
-use App\Models\KelolaUndangan\Galery;
-use App\Models\KelolaUndangan\ImgKisahCinta;
 use App\Models\KelolaUndangan\Kado;
-use App\Models\KelolaUndangan\KisahCinta;
-use App\Models\KelolaUndangan\Sound;
-use App\Models\KelolaUndangan\Streaming;
+use App\Models\KelolaUndangan\Pria;
 use App\Models\KelolaUndangan\Tamu;
+use App\Models\KelolaUndangan\Acara;
+use App\Models\KelolaUndangan\Sound;
+use App\Models\KelolaUndangan\Galery;
 use App\Models\KelolaUndangan\Ucapan;
 use App\Models\KelolaUndangan\Wanita;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\KelolaUndangan\FiturKado;
+use App\Models\KelolaUndangan\Streaming;
+use App\Models\KelolaUndangan\KisahCinta;
+use App\Models\KelolaUndangan\FiturUcapan;
+use App\Models\KelolaUndangan\Transaction;
+use App\Models\KelolaUndangan\ImgKisahCinta;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -85,4 +86,7 @@ class Data extends Model
         return $this->hasOne(teksPenutup::class);
     }
     
+    public function transaction(){
+        return $this->hasMany(Transaction::class, 'data_id', 'id');
+    }
 }
