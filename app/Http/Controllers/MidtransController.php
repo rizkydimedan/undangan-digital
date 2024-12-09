@@ -13,7 +13,7 @@ class MidtransController extends Controller
 
     public function notificationHandler(Request $request)
     {
-        // verify csrf token->middleware
+        // verify csrftoken->middleware
 
 
         Config::$serverKey = config('midtrans.serverKey');
@@ -42,8 +42,12 @@ class MidtransController extends Controller
                 $transaction->data->isActive = 1;
                 $transaction->data->save();
             } else {
-
-                throw new \Exception('Data terkait tidak ditemukan.');
+                return response()->json([
+                    'meta' => [
+                        'code' => 200,
+                        'message' => 'Data Id Tidak Ditemukan!'
+                    ]
+                ]);
             }
             $transaction->payment_status = 'SUCCESS';
         } else if ($status == 'pending') {
@@ -60,12 +64,9 @@ class MidtransController extends Controller
         $transaction->payment_type = $type;
         $transaction->save();
 
-        // sending to email
+        // Response json notif
         if ($transaction) {
-            if ($status == 'capture' && $fraud == 'accept') {
-            } else if ($status == 'settlement') {
-            } else if ($status == 'success') {
-            } else if ($status == 'capture'  && $fraud == 'deny') {
+            if ($status == 'capture'  && $fraud == 'deny') {
                 return response()->json([
                     'meta' => [
                         'code' => 200,
@@ -80,7 +81,7 @@ class MidtransController extends Controller
                     ]
                 ]);
             }
-
+        } else {
             return response()->json([
                 'meta' => [
                     'code' => 200,
