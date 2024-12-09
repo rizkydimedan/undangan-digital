@@ -30,7 +30,8 @@
                         <td class="p-3">
                             <a href="#" class="text-primary">
                                 <div class="d-flex align-items-center">
-                                    <img src="{{ Storage::url($gift->icon) }}" class="avatar avatar-ex-small  shadow"
+                                    
+                                    <img src="{{ asset($gift->icon) }}" class="avatar avatar-ex-small  shadow"
                                         style="object-fit: contain" alt="">
                                     <span class="ms-2">{{ $gift->nama_pay }}</span>
                                 </div>
