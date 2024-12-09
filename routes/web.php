@@ -20,6 +20,7 @@ use App\Http\Controllers\Dashboard\KelolaUndangan\Pay\PayController;
 use App\Http\Controllers\Dashboard\KelolaUndangan\PengantinController;
 use App\Http\Controllers\Dashboard\KelolaUndangan\ViewKelolaUndanganController;
 use App\Http\Controllers\Dashboard\Transaksi;
+use App\Http\Controllers\MidtransController;
 use App\Http\Controllers\TemaController;
 use App\Http\Controllers\viewAdminController;
 
@@ -75,6 +76,8 @@ Route::middleware(['auth', 'role:User', 'setup.complete'])->prefix('dashboard')-
     Route::get('/kelola/{id}/tema', [ViewKelolaUndanganController::class, 'tema'])->name('undangan.tema');
     Route::get('/demo/{slug}', [TemaController::class, 'demo'])->name('demo');
     Route::get('/pay/{id}', [PayController::class, 'index'])->name('pay');
+    Route::get('/success', [MidtransController::class, 'success'])->name('success');
+
 });
 
 
@@ -91,6 +94,8 @@ Route::middleware(['auth', 'role:Owner'])->prefix('admin')->name('admin.')->grou
     Route::get('/pay-setting/', [viewAdminController::class, 'index'])->name('pay.setting');
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 });
+
+
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])

@@ -52,30 +52,34 @@ class Pay extends Component
     }
     public function checkout()
     {
-        // $selectedDataId = $this->dataId->pluck('id')->first();
+        // ambil data DataId
+        $selectedDataId = $this->dataId->pluck('id')->first();
 
-        // Transaction::create([
-        //     'invoice' => '',
-        //     'user_id' => Auth::user()->id,
-        //     'data_id' => $selectedDataId,
-        //     'link_snap' => '',
-        //     'price' => $this->harga,
-        //     'promo' => $this->promo,
-        //     'gross_amount' => $this->total,
-        //     'payment_status' => 'PENDING',
-        //     'payment_type' => '',
-        // ]);
+        // create Transaction
+       $transactions = Transaction::create([
+            'invoice' => 'INV-' . Str::random(8),
+            'user_id' => Auth::user()->id,
+            'data_id' => $selectedDataId,
+            'link_snap' => '',
+            'price' => $this->harga,
+            'promo' => $this->promo,
+            'gross_amount' => $this->total,
+            'payment_status' => 'PENDING',
+            'payment_type' => '',
+        ]);
         // session()->flash('message', 'Data Bertambah');
         // // dd($data);
 
+        // Config midtrans
         Config::$serverKey = config('midtrans.serverKey');
         Config::$isProduction = config('midtrans.isProduction');
         Config::$isSanitized = config('midtrans.isSanitized');
         Config::$is3ds = config('midtrans.is3ds');
 
+        // mid params
         $midtrans_params = [
-            'transaction_details' => [
-                'order_id' => 'INV-' . Str::random(8),
+            'transaction_details' => [ 
+                'order_id' => $transactions->invoice,
                 'gross_amount' => (int) $this->harga,
             ],
             'customer_details' => [
@@ -83,24 +87,24 @@ class Pay extends Component
                 'email' => $this->email,
                 'phone' => $this->wa,
             ],
-            'enabled_payments' => [],
+            'enabled_payments' => [$this->channel],
             'vtweb' => []
         ];
+      
 
+        // link snap payment_url 
         try {
             $paymentUrl = Snap::createTransaction($midtrans_params)->redirect_url;
-
+            // update link payment
+            $transactions->update([
+                'link_snap' => $paymentUrl,
+            ]);
             return redirect()->away($paymentUrl);
         } catch (Exception $e) {
             echo $e->getMessage();
         }
 
-
-
     }
-
-
-
 
     public function render()
     {
