@@ -2,15 +2,106 @@
 
 namespace App\Http\Controllers;
 
+
+use Midtrans\Config;
+use Midtrans\Notification;
 use Illuminate\Http\Request;
+use App\Models\KelolaUndangan\Transaction;
 
 class MidtransController extends Controller
 {
 
-    public function callback(){
-        // $transactions = Transaction::with('data', 'user')
+    public function notificationHandler(Request $request)
+    {
+        // verify csrf token->middleware
+
+
+        Config::$serverKey = config('midtrans.serverKey');
+        Config::$isProduction = config('midtrans.isProduction');
+        Config::$isSanitized = config('midtrans.isSanitized');
+        Config::$is3ds = config('midtrans.is3ds');
+
+        // Midtrans Notification
+        try {
+            $notif = new Notification();
+        } catch (\Exception $e) {
+            exit($e->getMessage());
+        }
+        $status = $notif->transaction_status;
+        $type = $notif->payment_type;
+        $order_id = $notif->order_id;
+        $fraud = $notif->fraud_status;
+
+        $transaction = Transaction::with('data')->where('invoice', $order_id)->firstOrFail();
+        if ($status == 'capture') {
+            if ($type == 'credit_card') {
+                $transaction->payment_status = ($fraud == 'challenge') ? 'CHALLENGE' : 'SUCCESS';
+            }
+        } else if ($status == 'settlement') {
+            if ($transaction->data) {
+                $transaction->data->isActive = 1;
+                $transaction->data->save();
+            } else {
+
+                throw new \Exception('Data terkait tidak ditemukan.');
+            }
+            $transaction->payment_status = 'SUCCESS';
+        } else if ($status == 'pending') {
+            $transaction->payment_status = 'PENDING';
+        } else if ($status == 'deny') {
+            $transaction->payment_status = 'FAILED';
+        } else if ($status == 'expire') {
+            $transaction->payment_status = 'EXPIRED';
+        } else if ($status == 'cancel') {
+            $transaction->payment_status = 'FAILED';
+        }
+
+
+        $transaction->payment_type = $type;
+        $transaction->save();
+
+        // sending to email
+        if ($transaction) {
+            if ($status == 'capture' && $fraud == 'accept') {
+            } else if ($status == 'settlement') {
+            } else if ($status == 'success') {
+            } else if ($status == 'capture'  && $fraud == 'deny') {
+                return response()->json([
+                    'meta' => [
+                        'code' => 200,
+                        'message' => 'Midtrans Payment Challenge'
+                    ]
+                ]);
+            } else {
+                return response()->json([
+                    'meta' => [
+                        'code' => 200,
+                        'message' => 'Midtrans Payment Not Settlement'
+                    ]
+                ]);
+            }
+
+            return response()->json([
+                'meta' => [
+                    'code' => 200,
+                    'message' => 'Midtrans Notification Success'
+                ]
+            ]);
+        }
     }
-    public function success(){
+
+    public function finishRedirect()
+    {
         return view('page.success');
+    }
+
+    public function unfinishRedirect(Request $request)
+    {
+        return view('page.unfinish');
+    }
+
+    public function errorRedirect(Request $request)
+    {
+        return view('page.failed');
     }
 }

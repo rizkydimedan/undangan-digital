@@ -10,7 +10,7 @@
             </svg>
         </div>
         <div class="text-center">
-            <h1>Payment Done!</h1>
+            <h1>Payment Failed!</h1>
             <p>Thank you for completing your secure online payment.
             </p>
             <a href="{{ route('home') }}" class="btn btn-primary">Back Home</a>

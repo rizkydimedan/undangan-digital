@@ -76,7 +76,8 @@ Route::middleware(['auth', 'role:User', 'setup.complete'])->prefix('dashboard')-
     Route::get('/kelola/{id}/tema', [ViewKelolaUndanganController::class, 'tema'])->name('undangan.tema');
     Route::get('/demo/{slug}', [TemaController::class, 'demo'])->name('demo');
     Route::get('/pay/{id}', [PayController::class, 'index'])->name('pay');
-    Route::get('/success', [MidtransController::class, 'success'])->name('success');
+
+    
 
 });
 
@@ -95,6 +96,13 @@ Route::middleware(['auth', 'role:Owner'])->prefix('admin')->name('admin.')->grou
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 });
 
+
+// Midtrans
+Route::post('/midtrans/callback', [MidtransController::class, 'notificationHandler']);
+
+Route::get('/midtrans/finish', [MidtransController::class, 'finishRedirect']);
+Route::get('/midtrans/unfinished', [MidtransController::class, 'unfinishRedirect']);
+Route::get('/midtrans/failed', [MidtransController::class, 'errorRedirect']);
 
 
 Route::view('profile', 'profile')

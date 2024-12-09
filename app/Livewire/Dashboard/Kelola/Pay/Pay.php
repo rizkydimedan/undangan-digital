@@ -104,6 +104,8 @@ class Pay extends Component
             echo $e->getMessage();
         }
 
+        return redirect()->back();
+
     }
 
     public function render()

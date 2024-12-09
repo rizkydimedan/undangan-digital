@@ -10,7 +10,7 @@
         <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
             <div class="accordion-body">
                 @foreach ($pay as $item)
-                    @if ($item->category === 'ewallet')
+                    @if ($item->category === 'gopay')
                         <div class="border border-red rounded rad my-2">
                             <input type="radio" class="btn-check" id="pay{{ $item->id }}" name="channel"
                                 value="{{ $item->slug }}" wire:model.lazy="channel">

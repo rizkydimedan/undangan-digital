@@ -22,13 +22,12 @@ class PayController extends Controller
 
     public function index($id)
     {
-        if($this->getData($id)){
+        if ($this->getData($id)) {
             return view('user.kelola.pay.pay', [
                 'data' => $this->getData($id),
             ]);
-        }else{
+        } else {
             return abort('403');
         }
-       
     }
 }

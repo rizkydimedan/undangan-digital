@@ -7,7 +7,7 @@
     </div>
     <select class="form-select mb-3" aria-label="Default  select example" wire:model='category'>
         <option selected>Pilih Kategori</option>
-        <option value="ewallet">Qris / E-Wallet</option>
+        <option value="gopay">Qris / E-Wallet</option>
         <option value="va">Virtual Account</option>
         <option value="other">Other Bank</option>
     </select>
