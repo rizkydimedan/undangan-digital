@@ -15,15 +15,15 @@ class Tema extends Component
 
     public function mount(){
         $this->tema = Theme::all(); 
-        $this->dataId = Data::all();    
+        // $this->dataId = Data::all();    
     }
     public function pay()
     {
-    $selectedDataId = $this->dataId->pluck('id')->first();
-     Transaction::create([
-        'data_id'=> $selectedDataId,
-        'payment_type' => 'qris'
-     ]);
+    // $selectedDataId = $this->dataId->pluck('id')->first();
+    //  Transaction::create([
+    //     'data_id'=> $selectedDataId,
+    //     'payment_type' => 'qris'
+    //  ]);
         return redirect()->route('dashboard.pay', Crypt::encryptString($this->dataId));
     }
     
