@@ -90,8 +90,7 @@ class Pay extends Component
             'enabled_payments' => [$this->channel],
             "credit_card" => [
                 "secure" => true
-            ],
-            'vtweb' => []
+            ]
         ];
 
 
