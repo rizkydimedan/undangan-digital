@@ -13,7 +13,7 @@
                     @if ($item->category === 'gopay')
                         <div class="border border-red rounded rad my-2">
                             <input type="radio" class="btn-check" id="pay{{ $item->id }}" name="channel"
-                                value="{{ $item->slug }}" wire:model.lazy="channel">
+                                value="{{ $item->category }}" wire:model.lazy="channel">
                             <label for="pay{{ $item->id }}"
                                 class="btn btn-outline btn-outline-dashed btn-outline-default d-flex align-items-center p-3 mb-0">
                                 <div class="symbol symbol-50px me-3 overflow-hidden">
@@ -46,6 +46,68 @@
                         <div class="border border-red rounded rad my-2">
                             <input type="radio" class="btn-check" id="pay{{ $item->id }}" name="channel"
                                 value="{{ $item->slug }}_va" wire:model.lazy="channel">
+                            <label for="pay{{ $item->id }}"
+                                class="btn btn-outline btn-outline-dashed btn-outline-default d-flex align-items-center p-3 mb-0">
+                                <div class="symbol symbol-50px me-3 overflow-hidden">
+                                    <img src="{{ asset('storage/' . $item->image) }}" width="50" class="h-auto"
+                                        alt="Logo {{ $item->bank }}">
+                                </div>
+                                <div class="text-start">
+                                    <span class="fw-bold text-dark fs-5">{{ $item->bank }}</span>
+                                </div>
+                            </label>
+                        </div>
+                    @endif
+                @endforeach
+            </div>
+        </div>
+    </div>
+
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                Gerai (Indomaret, Alfamart)
+            </button>
+        </h2>
+        <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                @foreach ($pay as $item)
+                    @if ($item->category === 'cstore')
+                        <div class="border border-red rounded rad my-2">
+                            <input type="radio" class="btn-check" id="pay{{ $item->id }}" name="channel"
+                                value="{{ $item->slug }}" wire:model.lazy="channel">
+                            <label for="pay{{ $item->id }}"
+                                class="btn btn-outline btn-outline-dashed btn-outline-default d-flex align-items-center p-3 mb-0">
+                                <div class="symbol symbol-50px me-3 overflow-hidden">
+                                    <img src="{{ asset('storage/' . $item->image) }}" width="50" class="h-auto"
+                                        alt="Logo {{ $item->bank }}">
+                                </div>
+                                <div class="text-start">
+                                    <span class="fw-bold text-dark fs-5">{{ $item->bank }}</span>
+                                </div>
+                            </label>
+                        </div>
+                    @endif
+                @endforeach
+            </div>
+        </div>
+    </div>
+
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                Shopee Pay
+            </button>
+        </h2>
+        <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                @foreach ($pay as $item)
+                    @if ($item->category === 'shopeepay')
+                        <div class="border border-red rounded rad my-2">
+                            <input type="radio" class="btn-check" id="pay{{ $item->id }}" name="channel"
+                                value="{{ $item->category }}" wire:model.lazy="channel">
                             <label for="pay{{ $item->id }}"
                                 class="btn btn-outline btn-outline-dashed btn-outline-default d-flex align-items-center p-3 mb-0">
                                 <div class="symbol symbol-50px me-3 overflow-hidden">

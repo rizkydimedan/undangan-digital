@@ -9,6 +9,8 @@
         <option selected>Pilih Kategori</option>
         <option value="gopay">Qris / E-Wallet</option>
         <option value="va">Virtual Account</option>
+        <option value="cstore">Gerai</option>
+        <option value="shopeepay">Shoope Pay</option>
         <option value="other">Other Bank</option>
     </select>
     <div class="mb-3">

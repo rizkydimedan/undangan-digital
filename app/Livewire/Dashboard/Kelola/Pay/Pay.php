@@ -56,7 +56,7 @@ class Pay extends Component
         $selectedDataId = $this->dataId->pluck('id')->first();
 
         // create Transaction
-       $transactions = Transaction::create([
+        $transactions = Transaction::create([
             'invoice' => 'INV-' . Str::random(8),
             'user_id' => Auth::user()->id,
             'data_id' => $selectedDataId,
@@ -76,9 +76,9 @@ class Pay extends Component
         Config::$isSanitized = config('midtrans.isSanitized');
         Config::$is3ds = config('midtrans.is3ds');
 
-        // mid params
+        // midtrans params
         $midtrans_params = [
-            'transaction_details' => [ 
+            'transaction_details' => [
                 'order_id' => $transactions->invoice,
                 'gross_amount' => (int) $this->harga,
             ],
@@ -88,9 +88,12 @@ class Pay extends Component
                 'phone' => $this->wa,
             ],
             'enabled_payments' => [$this->channel],
+            "credit_card" => [
+                "secure" => true
+            ],
             'vtweb' => []
         ];
-      
+
 
         // link snap payment_url 
         try {
@@ -105,7 +108,6 @@ class Pay extends Component
         }
 
         return redirect()->back();
-
     }
 
     public function render()
