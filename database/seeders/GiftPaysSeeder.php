@@ -28,7 +28,7 @@ class GiftPaysSeeder extends Seeder
             ],
             [
                 'nama_pay' => 'GoPay',
-                'icon' => 'gopay-icon.png',
+                'icon' => asset('public/assets/images/bank/gopay.png'),
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
