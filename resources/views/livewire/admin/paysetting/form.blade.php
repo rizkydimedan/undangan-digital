@@ -13,7 +13,7 @@
         <option value="cstore">Gerai</option>
         <option value="shopeepay">Shoope Pay</option>
         <option value="echannel">Echannel</option>
-        <option value="other">Other Bank</option>
+        <option value="cardless_credit">Cardless Credit</option>
     </select>
     <div class="mb-3">
         <label for="fee" class="form-label">Fee Admin*</label>

@@ -70,13 +70,13 @@ class Pay extends Component
         // session()->flash('message', 'Data Bertambah');
         // // dd($data);
 
-        // Config midtrans
+       
         Config::$serverKey = config('midtrans.serverKey');
         Config::$isProduction = config('midtrans.isProduction');
         Config::$isSanitized = config('midtrans.isSanitized');
         Config::$is3ds = config('midtrans.is3ds');
 
-        // midtrans params
+        
         $midtrans_params = [
             'transaction_details' => [
                 'order_id' => $transactions->invoice,

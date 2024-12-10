@@ -1,6 +1,6 @@
 <div class="accordion" id="accordionExample">
-     <!-- Section Credit Card -->
-     <div class="accordion-item">
+    <!-- Section Credit Card -->
+    <div class="accordion-item">
         <h2 class="accordion-header">
             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFirst"
                 aria-expanded="true" aria-controls="collapseFirst">
@@ -94,8 +94,7 @@
         </div>
     </div>
 
-
- <!-- Section Gerai (Indomaret, Alfa) -->
+    <!-- Section Gerai (Indomaret, Alfa) -->
     <div class="accordion-item">
         <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -158,7 +157,7 @@
             </div>
         </div>
     </div>
-    
+
     {{-- Mandiri --}}
     <div class="accordion-item">
         <h2 class="accordion-header">
@@ -174,6 +173,38 @@
                         <div class="border border-red rounded rad my-2">
                             <input type="radio" class="btn-check" id="pay{{ $item->id }}" name="channel"
                                 value="{{ $item->category }}" wire:model.lazy="channel">
+                            <label for="pay{{ $item->id }}"
+                                class="btn btn-outline btn-outline-dashed btn-outline-default d-flex align-items-center p-3 mb-0">
+                                <div class="symbol symbol-50px me-3 overflow-hidden">
+                                    <img src="{{ asset('storage/' . $item->image) }}" width="50" class="h-auto"
+                                        alt="Logo {{ $item->bank }}">
+                                </div>
+                                <div class="text-start">
+                                    <span class="fw-bold text-dark fs-5">{{ $item->bank }}</span>
+                                </div>
+                            </label>
+                        </div>
+                    @endif
+                @endforeach
+            </div>
+        </div>
+    </div>
+
+    {{-- Mandiri, Akulaku, Kredivo --}}
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                Cardless Credit
+            </button>
+        </h2>
+        <div id="collapseSix" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                @foreach ($pay as $item)
+                    @if ($item->category === 'cardless_credit')
+                        <div class="border border-red rounded rad my-2">
+                            <input type="radio" class="btn-check" id="pay{{ $item->id }}" name="channel"
+                                value="{{ $item->slug }}" wire:model.lazy="channel">
                             <label for="pay{{ $item->id }}"
                                 class="btn btn-outline btn-outline-dashed btn-outline-default d-flex align-items-center p-3 mb-0">
                                 <div class="symbol symbol-50px me-3 overflow-hidden">
