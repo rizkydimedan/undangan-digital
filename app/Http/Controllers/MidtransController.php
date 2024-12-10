@@ -27,12 +27,14 @@ class MidtransController extends Controller
         } catch (\Exception $e) {
             exit($e->getMessage());
         }
+
         $status = $notif->transaction_status;
         $type = $notif->payment_type;
         $order_id = $notif->order_id;
         $fraud = $notif->fraud_status;
 
         $transaction = Transaction::with('data')->where('invoice', $order_id)->firstOrFail();
+
         if ($status == 'capture') {
             if ($type == 'credit_card') {
                 $transaction->payment_status = ($fraud == 'challenge') ? 'CHALLENGE' : 'SUCCESS';
@@ -50,14 +52,14 @@ class MidtransController extends Controller
                 ]);
             }
             $transaction->payment_status = 'SUCCESS';
-        } else if ($status == 'pending') {
+        } else if ($status == 'pending') { 
             $transaction->payment_status = 'PENDING';
         } else if ($status == 'deny') {
             $transaction->payment_status = 'FAILED';
         } else if ($status == 'expire') {
             $transaction->payment_status = 'EXPIRED';
         } else if ($status == 'cancel') {
-            $transaction->payment_status = 'FAILED';
+            $transaction->payment_status = 'CANCEL';
         }
 
 
@@ -81,14 +83,14 @@ class MidtransController extends Controller
                     ]
                 ]);
             }
-        } else {
-            return response()->json([
-                'meta' => [
-                    'code' => 200,
-                    'message' => 'Midtrans Notification Success'
-                ]
-            ]);
         }
+
+        return response()->json([
+            'meta' => [
+                'code' => 200,
+                'message' => 'Midtrans Notification Success'
+            ]
+        ]);
     }
 
     public function finishRedirect()
