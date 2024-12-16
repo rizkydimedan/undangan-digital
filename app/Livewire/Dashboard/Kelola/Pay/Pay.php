@@ -55,7 +55,7 @@ class Pay extends Component
         // ambil data DataId
         $selectedDataId = $this->dataId->pluck('id')->first();
 
-        // create Transaction
+        // create Transaction 
         $transactions = Transaction::create([
             'invoice' => 'INV-' . Str::random(8),
             'user_id' => Auth::user()->id,
@@ -76,7 +76,7 @@ class Pay extends Component
         Config::$isSanitized = config('midtrans.isSanitized');
         Config::$is3ds = config('midtrans.is3ds');
 
-        
+        // midtrans parameter
         $midtrans_params = [
             'transaction_details' => [
                 'order_id' => $transactions->invoice,
@@ -101,6 +101,8 @@ class Pay extends Component
             $transactions->update([
                 'link_snap' => $paymentUrl,
             ]);
+
+            // redirect to payment gateway midtrans
             return redirect()->away($paymentUrl);
         } catch (Exception $e) {
             echo $e->getMessage();

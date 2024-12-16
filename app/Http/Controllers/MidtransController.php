@@ -66,7 +66,7 @@ class MidtransController extends Controller
         $transaction->payment_type = $type;
         $transaction->save();
 
-        // Response json notif
+        // Response json notif postman
         if ($transaction) {
             if ($status == 'capture'  && $fraud == 'deny') {
                 return response()->json([
@@ -75,7 +75,7 @@ class MidtransController extends Controller
                         'message' => 'Midtrans Payment Challenge'
                     ]
                 ]);
-            } else {
+            } else if ($status == 'pending' && $status == 'deny' && $status == 'expire' && $status == 'cancel'){
                 return response()->json([
                     'meta' => [
                         'code' => 200,
@@ -83,7 +83,7 @@ class MidtransController extends Controller
                     ]
                 ]);
             }
-        }
+        } 
 
         return response()->json([
             'meta' => [
@@ -91,6 +91,7 @@ class MidtransController extends Controller
                 'message' => 'Midtrans Notification Success'
             ]
         ]);
+    
     }
 
     public function finishRedirect()
