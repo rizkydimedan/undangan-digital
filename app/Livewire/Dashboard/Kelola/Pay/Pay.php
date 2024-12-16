@@ -53,8 +53,9 @@ class Pay extends Component
     public function checkout()
     {
         // ambil data DataId
-        $selectedDataId = $this->dataId->pluck('id')->first();
-
+        $selectedDataId = $this->dataId->implode('id');
+        // $this->dataId->pluck('id')->first();
+        dd($selectedDataId);
         // create Transaction 
         $transactions = Transaction::create([
             'invoice' => 'INV-' . Str::random(8),
